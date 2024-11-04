@@ -41,11 +41,11 @@ public class UserServiceImpl implements UserService {
     public void updateUser(Long userId, String name, String email) {
         User users = userRepository.findById(userId).orElseThrow(() -> new IllegalStateException("student with id " + userId + "does not exists"));
 
-        if (name != null && name.length() > 0 && !Objects.equals(users.getName(), name)) {
+        if (name != null && !name.isEmpty() && !Objects.equals(users.getName(), name)) {
             users.setName(name);
         }
 
-        if(email != null && email.length() > 0 && !Objects.equals(users.getEmail(), email)) {
+        if(email != null && !email.isEmpty() && !Objects.equals(users.getEmail(), email)) {
             Optional<User> usersOptional = userRepository.findByemail(email);
             if (usersOptional.isPresent()) {
                 throw new IllegalArgumentException("Email is already in use");
