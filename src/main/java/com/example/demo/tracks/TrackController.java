@@ -9,10 +9,10 @@ import java.util.List;
 @RequestMapping(path = "api/v1/track")
 public class TrackController {
 
-    private final TrackService trackService;
+    private final TrackServiceImpl trackService;
 
     @Autowired
-    public TrackController(TrackService trackService) {
+    public TrackController(TrackServiceImpl trackService) {
         this.trackService = trackService;
     }
 

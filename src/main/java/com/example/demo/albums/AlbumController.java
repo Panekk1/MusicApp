@@ -9,9 +9,9 @@ import java.util.List;
 @RequestMapping(path = "api/v1/album")
 public class AlbumController {
 
-    private final AlbumService albumService;
+    private final AlbumServiceImpl albumService;
 
-    @Autowired public AlbumController(AlbumService albumService) {
+    @Autowired public AlbumController(AlbumServiceImpl albumService) {
         this.albumService = albumService;
     }
 
