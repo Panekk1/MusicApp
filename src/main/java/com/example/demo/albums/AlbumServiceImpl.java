@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Component
-public class AlbumServiceImpl {
+public class AlbumServiceImpl implements AlbumService {
 
     private final AlbumRepository albumRepository;
 
