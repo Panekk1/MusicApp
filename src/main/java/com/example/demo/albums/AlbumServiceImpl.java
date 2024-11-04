@@ -41,11 +41,11 @@ public class AlbumServiceImpl implements AlbumService {
     public void updateAlbum(Long id, String title, String description) {
         Album album = albumRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Album does not exist"));
 
-        if (description !=null && description.length()> 0 && !Objects.equals(album.getDescription(), description)) {
+        if (description !=null && !description.isEmpty() && !Objects.equals(album.getDescription(), description)) {
             album.setDescription(description);
         }
 
-        if (title !=null && title.length() > 0 && !Objects.equals(album.getTitle(), title)) {
+        if (title !=null && !title.isEmpty() && !Objects.equals(album.getTitle(), title)) {
             Optional<Album> albumsOptional = albumRepository.findByTitle(title);
             if (albumsOptional.isPresent()) {
                 throw new IllegalArgumentException("Album already exists");

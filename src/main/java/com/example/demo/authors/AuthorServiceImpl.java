@@ -41,11 +41,11 @@ public class AuthorServiceImpl implements AuthorService {
     public void updateAuthor(Long authorId, String name, String social_media_links) {
         Author author = authorRepository.findById(authorId).orElseThrow(() -> new IllegalArgumentException("Author with id" + authorId + "does not exist"));
 
-        if (name != null && name.length() > 0 && !Objects.equals(author.getName(), name)) {
+        if (name != null && !name.isEmpty() && !Objects.equals(author.getName(), name)) {
             author.setName(name);
         }
 
-        if (social_media_links != null && social_media_links.length() > 0 && !Objects.equals(author.getSocial_media_links(), social_media_links)) {
+        if (social_media_links != null && !social_media_links.isEmpty() && !Objects.equals(author.getSocial_media_links(), social_media_links)) {
             Optional<Author> authorsOptional = authorRepository.findBySocialMedia(social_media_links);
             if (authorsOptional.isPresent()) {
                 throw new IllegalArgumentException("Author already exists");

@@ -41,7 +41,7 @@ public class TrackServiceImpl implements TrackService {
     public void updateTrack(Long id, String title) {
         Track track = trackRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Track not found"));
 
-        if (title != null && title.length() > 0 && !Objects.equals(track.getTitle(), title)) {
+        if (title != null && !title.isEmpty() && !Objects.equals(track.getTitle(), title)) {
             track.setTitle(title);
         }
     }
