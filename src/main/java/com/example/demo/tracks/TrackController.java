@@ -1,8 +1,8 @@
 package com.example.demo.tracks;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -32,7 +32,14 @@ public class TrackController {
     }
 
     @PutMapping(path = "{id}")
-    public void updateTrack(@PathVariable("id") Long id, @RequestParam(required = false) String title) {
-        trackService.updateTrack(id, title);
+    public ResponseEntity<Track> updateTRack(@PathVariable("id") Long id, @RequestBody Track trackUpdates) {
+        Track updatedTrack = trackService.updateTrack(id, trackUpdates);
+        return ResponseEntity.ok(updatedTrack);
+    }
+
+    @PutMapping(path = "{id}/views")
+    public void updateTrackViews(@PathVariable("id") Long id, @RequestParam int views) {
+        trackService.updateTrackViews(id, views);
     }
 }
+

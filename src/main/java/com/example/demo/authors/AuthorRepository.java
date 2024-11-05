@@ -7,9 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface AuthorRepository
-        extends JpaRepository<Author, Long> {
+public interface AuthorRepository extends JpaRepository<Author, Long> {
 
-    @Query ("SELECT s FROM Author s WHERE s.social_media_links = ?1")
-    Optional<Author> findBySocialMedia(String socialMedia);
+    @Query("SELECT a FROM Author a WHERE a.name = ?1")
+    Optional<Author> findByName(String Name);
 }

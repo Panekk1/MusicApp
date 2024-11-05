@@ -6,5 +6,6 @@ public interface TrackService {
     List<Track> getTracks();
     void addTrack(Track track);
     void deleteTrack(Long id);
-    void updateTrack(Long id, String title);
+    Track updateTrack(Long id, Track trackUpdates);
+    void updateTrackViews(Long id, int views);
 }

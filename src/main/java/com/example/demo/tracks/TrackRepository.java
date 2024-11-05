@@ -7,9 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface TrackRepository
-        extends CrudRepository<Track, Long> {
-
+public interface TrackRepository extends CrudRepository<Track, Long> {
     @Query ("SELECT s FROM Track s WHERE s.title = ?1")
     Optional<Track> findByTitle(String title);
 }

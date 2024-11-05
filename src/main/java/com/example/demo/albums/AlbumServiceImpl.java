@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -38,19 +39,33 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Transactional
-    public void updateAlbum(Long id, String title, String description) {
+    public Album updateAlbum(Long id, Album albumUpdates) {
         Album album = albumRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Album does not exist"));
 
-        if (description !=null && !description.isEmpty() && !Objects.equals(album.getDescription(), description)) {
-            album.setDescription(description);
+        if (!Objects.equals(albumUpdates.getId_author(), album.getId_author())) {
+            album.setId_author(albumUpdates.getId_author());
         }
 
-        if (title !=null && !title.isEmpty() && !Objects.equals(album.getTitle(), title)) {
-            Optional<Album> albumsOptional = albumRepository.findByTitle(title);
-            if (albumsOptional.isPresent()) {
-                throw new IllegalArgumentException("Album already exists");
-            }
-            album.setTitle(title);
+        if (albumUpdates.getIs_single() != null) {
+
         }
+
+        if (!Objects.equals(albumUpdates.getTitle(), album.getTitle())) {
+            album.setTitle(albumUpdates.getTitle());
+        }
+
+        if (!Objects.equals(albumUpdates.getDescription(), album.getDescription())) {
+            album.setDescription(albumUpdates.getDescription());
+        }
+
+        if (!Objects.equals(albumUpdates.getGenre(), album.getGenre())) {
+            album.setGenre(albumUpdates.getGenre());
+        }
+
+        if (!Objects.equals(albumUpdates.getYear(), album.getYear())) {
+            album.setYear(albumUpdates.getYear());
+        }
+
+        return albumRepository.save(album);
     }
 }

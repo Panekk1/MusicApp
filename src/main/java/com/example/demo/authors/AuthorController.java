@@ -1,6 +1,7 @@
 package com.example.demo.authors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,7 +33,8 @@ public class AuthorController {
     }
 
     @PutMapping(path = "{id}")
-    public void updateAuthor(@PathVariable("id") Long id, @RequestParam(required = false) String name, @RequestParam(required = false) String social_media_links) {
-        authorService.updateAuthor(id, name, social_media_links);
+    public ResponseEntity<Author> updateAuthor(@PathVariable("id") Long id, @RequestBody Author AuthorUpdates) {
+        Author updatedAuthor = authorService.updateAuthor(id, AuthorUpdates);
+        return ResponseEntity.ok(updatedAuthor);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.demo.albums;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,14 +26,15 @@ public class AlbumController {
         albumService.addAlbum(album);
     }
 
-    @DeleteMapping
+    @DeleteMapping(path = "{id}")
     public void deleteAlbum(@PathVariable("id") Long id) {
         albumService.deleteAlbum(id);
     }
 
     @PutMapping(path = "{id}")
-    public void updateAlbum(@PathVariable("id") Long id, @RequestParam(required = false) String title, @RequestParam(required = false) String description) {
-        albumService.updateAlbum(id, title, description);
+    public ResponseEntity<Album> updateAlbum(@PathVariable("id") Long id, @RequestBody Album albumUpdates) {
+        Album updatedAlbum = albumService.updateAlbum(id, albumUpdates);
+        return ResponseEntity.ok(updatedAlbum);
     }
 
 }
