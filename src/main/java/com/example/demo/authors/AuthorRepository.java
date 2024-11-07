@@ -9,6 +9,15 @@ import java.util.Optional;
 @Repository
 public interface AuthorRepository extends JpaRepository<Author, Long> {
 
-    @Query("SELECT a FROM Author a WHERE a.name = ?1")
-    Optional<Author> findByName(String Name);
+    Optional<Author> findByName(String name);
+
+    Optional<Author> findByFacebookLink(String facebookLink);
+
+    Optional<Author> findByTwitterLink(String twitterLink);
+
+    Optional<Author> findByInstagramLink(String instagramLink);
+
+    Optional<Author> findByLinkedInLink(String linkedInLink);
+
+    Optional<Author> findByYoutubeLink(String youtubeLink);
 }

@@ -47,7 +47,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public User updateUser(Long id, User userUpdates) {
-        User user = userRepository.findById(id).orElseThrow(() -> new IllegalStateException("User does not exist"));
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("User does not exist"));
 
         if (!Objects.equals(userUpdates.getLogin(), user.getLogin())) {
             user.setLogin(userUpdates.getLogin());
@@ -91,7 +92,7 @@ public class UserServiceImpl implements UserService {
             user.setBio(userUpdates.getBio());
         }
 
+        // Save updated user and return it
         return userRepository.save(user);
     }
-
 }
