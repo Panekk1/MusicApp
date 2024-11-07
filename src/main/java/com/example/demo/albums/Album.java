@@ -26,7 +26,7 @@ public class Album {
 
     private int id;
     private int id_author;
-    private boolean is_single;
+    private Boolean is_single;
     private String title;
     private String description;
     private String genre;

@@ -47,7 +47,7 @@ public class AlbumServiceImpl implements AlbumService {
         }
 
         if (albumUpdates.getIs_single() != null) {
-            //nie dziala getIs_signle
+            album.setIs_single(albumUpdates.getIs_single());
         }
 
         if (!Objects.equals(albumUpdates.getTitle(), album.getTitle())) {
