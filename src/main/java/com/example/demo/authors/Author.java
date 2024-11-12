@@ -1,16 +1,15 @@
 package com.example.demo.authors;
 
+import com.example.demo.tracks.Track;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.sound.midi.Track;
 import java.time.LocalDate;
 import java.util.List;
 
 @Getter
 @Setter
-
 @Entity
 @Table(name = "author")
 public class Author {
@@ -24,8 +23,8 @@ public class Author {
             strategy = GenerationType.SEQUENCE,
             generator = "author_sequence"
     )
-
     private Integer id;
+
     private String name;
     private String hometown;
     private LocalDate born;
@@ -37,6 +36,9 @@ public class Author {
     private String instagramLink;
     private String linkedInLink;
     private String youtubeLink;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Track> tracks;
 
     public Author() {
     }

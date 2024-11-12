@@ -3,8 +3,10 @@ package com.example.demo.albums;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import com.example.demo.tracks.Track;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,8 +23,11 @@ public class Album {
             strategy = GenerationType.SEQUENCE,
             generator = "album_sequence"
     )
-
     private int id;
+
+    @OneToMany(mappedBy = "album", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Track> tracks;
+
     private int id_author;
     private Boolean is_single;
     private String title;
@@ -32,9 +37,10 @@ public class Album {
 
     public Album() {
     }
+
     @Override
     public String toString() {
-        return "Albums{" +
+        return "Album{" +
                 "id=" + id +
                 ", id_author=" + id_author +
                 ", is_single=" + is_single +

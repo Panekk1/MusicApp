@@ -23,6 +23,8 @@ public class User {
             generator = "user_sequence"
     )
 
+
+
     private int id;
     private String login;
     private String password;

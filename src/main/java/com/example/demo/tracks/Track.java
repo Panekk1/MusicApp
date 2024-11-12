@@ -1,5 +1,7 @@
 package com.example.demo.tracks;
 
+import com.example.demo.albums.Album;
+import com.example.demo.authors.Author;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,9 +10,8 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-
 @Entity
-@Table
+@Table(name = "track")
 public class Track {
     @Id
     @SequenceGenerator(
@@ -22,8 +23,16 @@ public class Track {
             strategy = GenerationType.SEQUENCE,
             generator = "track_sequence"
     )
-
     private int id;
+
+    @ManyToOne
+    @JoinColumn(name = "id", nullable = false)
+    private Album album;
+
+    @ManyToOne
+    @JoinColumn(name = "id", nullable = false)
+    private Author author;
+
     private int id_author;
     private int id_album;
     private int track_number;
@@ -40,8 +49,8 @@ public class Track {
     public String toString() {
         return "Track{" +
                 "id=" + id +
-                ", id_author=" + id_author +
-                ", id_album=" + id_album +
+                ", album=" + id_album +
+                ", author=" + id_author +
                 ", track_number=" + track_number +
                 ", title='" + title + '\'' +
                 ", genre='" + genre + '\'' +
