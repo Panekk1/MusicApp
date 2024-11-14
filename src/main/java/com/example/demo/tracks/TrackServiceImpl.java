@@ -25,12 +25,14 @@ public class TrackServiceImpl implements TrackService {
                 .collect(Collectors.toList());
     }
 
-    public void addTrack(Track track) {
+    @Transactional
+    public Track addTrack(Track track) {
         Optional<Track> tracksOptional = trackRepository.findByTitle(track.getTitle());
         if (tracksOptional.isPresent()) {
             throw new IllegalArgumentException("Track already exists");
         }
         trackRepository.save(track);
+        return track;
     }
 
     public void deleteTrack(Long id) {
@@ -54,8 +56,8 @@ public class TrackServiceImpl implements TrackService {
             track.setAuthor(trackUpdates.getAuthor());
         }
 
-        if (!Objects.equals(trackUpdates.getTrack_number(), track.getTrack_number())) {
-            track.setTrack_number(trackUpdates.getTrack_number());
+        if (!Objects.equals(trackUpdates.getTrackNumber(), track.getTrackNumber())) {
+            track.setTrackNumber(trackUpdates.getTrackNumber());
         }
 
         if (!Objects.equals(trackUpdates.getTitle(), track.getTitle())) {
@@ -66,8 +68,8 @@ public class TrackServiceImpl implements TrackService {
             track.setGenre(trackUpdates.getGenre());
         }
 
-        if (!Objects.equals(trackUpdates.getRelease_date(), track.getRelease_date())) {
-            track.setRelease_date(trackUpdates.getRelease_date());
+        if (!Objects.equals(trackUpdates.getReleaseDate(), track.getReleaseDate())) {
+            track.setReleaseDate(trackUpdates.getReleaseDate());
         }
 
         if (!Objects.equals(trackUpdates.getDuration(), track.getDuration())) {

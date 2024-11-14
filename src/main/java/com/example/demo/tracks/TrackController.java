@@ -22,9 +22,10 @@ public class TrackController {
     }
 
     @PostMapping
-    public void addTrack(@RequestBody Track track) {
-        trackService.addTrack(track);
-    }
+    public ResponseEntity<Track> registerNewTrack(@RequestBody Track track){
+        Track savedTrack = trackService.addTrack(track);
+        return ResponseEntity.ok(savedTrack);
+}
 
     @DeleteMapping(path = "{id}")
     public void deleteTrack(@PathVariable("id") Long id) {

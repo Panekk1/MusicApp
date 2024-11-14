@@ -2,13 +2,13 @@ package com.example.demo.albums;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@Component
+@Service
 public class AlbumServiceImpl implements AlbumService {
 
     private final AlbumRepository albumRepository;
@@ -23,12 +23,13 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Transactional
-    public void addAlbum(Album album) {
+    public Album addAlbum(Album album) {
         Optional<Album> albumsOptional = albumRepository.findByTitle(album.getTitle());
         if (albumsOptional.isPresent()) {
             throw new IllegalArgumentException("Album already exists");
         }
         albumRepository.save(album);
+        return album;
     }
 
     public void deleteAlbum(Long id) {

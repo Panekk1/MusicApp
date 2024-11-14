@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import com.example.demo.tracks.Track;
+import com.fasterxml.jackson.annotation.JsonIgnore;  // Import dla @JsonIgnore
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "album")
 public class Album {
+
     @Id
     @SequenceGenerator(
             name = "album_sequence",
@@ -26,6 +28,7 @@ public class Album {
     private int id;
 
     @OneToMany(mappedBy = "album", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore  // Ignorowanie tego pola przy serializacji
     private List<Track> tracks;
 
     private int id_author;
@@ -36,6 +39,7 @@ public class Album {
     private LocalDate releaseYear;
 
     public Album() {
+        // Default constructor
     }
 
     @Override

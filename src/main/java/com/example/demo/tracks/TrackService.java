@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface TrackService {
     List<Track> getTracks();
-    void addTrack(Track track);
+    Track addTrack(Track track);
     void deleteTrack(Long id);
     Track updateTrack(Long id, Track trackUpdates);
     void updateTrackViews(Long id, int views);

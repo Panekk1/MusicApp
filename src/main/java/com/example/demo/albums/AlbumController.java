@@ -22,9 +22,10 @@ public class AlbumController {
     }
 
     @PostMapping
-    public void addAlbum(@RequestBody Album album) {
-        albumService.addAlbum(album);
-    }
+    public ResponseEntity<Album> registerNewAlbum(@RequestBody Album album){
+        Album savedAlbum = albumService.addAlbum(album);
+        return ResponseEntity.ok(savedAlbum);
+}
 
     @DeleteMapping(path = "{id}")
     public void deleteAlbum(@PathVariable("id") Long id) {
