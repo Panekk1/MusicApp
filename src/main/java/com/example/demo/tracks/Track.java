@@ -26,15 +26,13 @@ public class Track {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "album_id", nullable = false)  // Foreign key column for Album
     private Album album;
 
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "author_id", nullable = false)  // Foreign key column for Author
     private Author author;
 
-    private int id_author;
-    private int id_album;
     private int track_number;
     private String title;
     private String genre;
@@ -49,8 +47,8 @@ public class Track {
     public String toString() {
         return "Track{" +
                 "id=" + id +
-                ", album=" + id_album +
-                ", author=" + id_author +
+                ", album=" + (album != null ? album.getId() : null) +
+                ", author=" + (author != null ? author.getId() : null) +
                 ", track_number=" + track_number +
                 ", title='" + title + '\'' +
                 ", genre='" + genre + '\'' +

@@ -4,15 +4,16 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Component
 public class TrackServiceImpl implements TrackService {
 
-    public final TrackRepository trackRepository;
+    private final TrackRepository trackRepository;
 
     @Autowired
     public TrackServiceImpl(TrackRepository trackRepository) {
@@ -20,7 +21,8 @@ public class TrackServiceImpl implements TrackService {
     }
 
     public List<Track> getTracks() {
-        return (List<Track>) trackRepository.findAll();
+        return StreamSupport.stream(trackRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
     }
 
     public void addTrack(Track track) {
@@ -41,14 +43,15 @@ public class TrackServiceImpl implements TrackService {
 
     @Transactional
     public Track updateTrack(Long id, Track trackUpdates) {
-        Track track = trackRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Track not found"));
+        Track track = trackRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Track not found"));
 
-        if (!Objects.equals(trackUpdates.getId_author(), track.getId_author())) {
-            track.setId_author(trackUpdates.getId_author());
+        if (!Objects.equals(trackUpdates.getAlbum(), track.getAlbum())) {
+            track.setAlbum(trackUpdates.getAlbum());
         }
 
-        if (!Objects.equals(trackUpdates.getId_album(), track.getId_album())) {
-            track.setId_album(trackUpdates.getId_album());
+        if (!Objects.equals(trackUpdates.getAuthor(), track.getAuthor())) {
+            track.setAuthor(trackUpdates.getAuthor());
         }
 
         if (!Objects.equals(trackUpdates.getTrack_number(), track.getTrack_number())) {
@@ -80,11 +83,11 @@ public class TrackServiceImpl implements TrackService {
 
     @Transactional
     public void updateTrackViews(Long id, int views) {
-        Track track = trackRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Track not found"));
+        Track track = trackRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Track not found"));
 
         if (views >= 0) {
             track.setViews(views);
         }
     }
-
 }

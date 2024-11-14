@@ -23,6 +23,7 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepository.findAll();
     }
 
+    @Transactional
     public void addNewAuthor(Author author) {
         Optional<Author> authorsOptional = authorRepository.findByName(author.getName());
         if (authorsOptional.isPresent()) {

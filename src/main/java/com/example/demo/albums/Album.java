@@ -33,7 +33,7 @@ public class Album {
     private String title;
     private String description;
     private String genre;
-    private LocalDate year;
+    private LocalDate releaseYear;
 
     public Album() {
     }
@@ -47,7 +47,7 @@ public class Album {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", genre='" + genre + '\'' +
-                ", year=" + year +
+                ", releaseYear=" + releaseYear +
                 '}';
     }
 }

@@ -17,10 +17,12 @@ public class AlbumServiceImpl implements AlbumService {
     public AlbumServiceImpl(AlbumRepository albumRepository) {
         this.albumRepository = albumRepository;
     }
+
     public List<Album> getAlbums() {
         return albumRepository.findAll();
     }
 
+    @Transactional
     public void addAlbum(Album album) {
         Optional<Album> albumsOptional = albumRepository.findByTitle(album.getTitle());
         if (albumsOptional.isPresent()) {
@@ -39,7 +41,8 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Transactional
     public Album updateAlbum(Long id, Album albumUpdates) {
-        Album album = albumRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Album does not exist"));
+        Album album = albumRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Album does not exist"));
 
         if (!Objects.equals(albumUpdates.getId_author(), album.getId_author())) {
             album.setId_author(albumUpdates.getId_author());
@@ -61,8 +64,8 @@ public class AlbumServiceImpl implements AlbumService {
             album.setGenre(albumUpdates.getGenre());
         }
 
-        if (!Objects.equals(albumUpdates.getYear(), album.getYear())) {
-            album.setYear(albumUpdates.getYear());
+        if (!Objects.equals(albumUpdates.getReleaseYear(), album.getReleaseYear())) {
+            album.setReleaseYear(albumUpdates.getReleaseYear());
         }
 
         return albumRepository.save(album);
