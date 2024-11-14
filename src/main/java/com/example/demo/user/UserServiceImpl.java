@@ -1,7 +1,12 @@
 package com.example.demo.user;
 
+import com.example.demo.model.AuthenticatedUser;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -10,9 +15,12 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Component
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
@@ -20,7 +28,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public List<User> getUsers() {
-        return (List<User>) userRepository.findAll();
+        return userRepository.findAll();
     }
 
     public void addUser(User user) {
@@ -32,6 +40,9 @@ public class UserServiceImpl implements UserService {
         if (userOptionalLogin.isPresent()) {
             throw new IllegalArgumentException("User with login " + user.getLogin() + " already exists");
         }
+        String encryptedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encryptedPassword);
+
         user.setRegistration_date(LocalDate.now());
         userRepository.save(user);
     }
@@ -94,5 +105,12 @@ public class UserServiceImpl implements UserService {
 
         // Save updated user and return it
         return userRepository.save(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User u = userRepository.findByName(username);
+        AuthenticatedUser user = new AuthenticatedUser(u);
+        return new AuthenticatedUser(u);
     }
 }
